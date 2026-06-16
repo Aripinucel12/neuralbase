@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Tools{% endblock %}
+{% block content %}
+<div class="page-header" style="position:relative;padding:3rem 0 2rem;text-align:center;">
+    <h1 style="font-size:2.2rem;font-weight:800;letter-spacing:-0.03em;margin-bottom:0.5rem;">🛠️ AI Tools</h1>
+    <p style="color:var(--text2);max-width:500px;margin:0 auto;">{{ tools|length }} tools untuk coding, writing, research, dan produktivitas.</p>
+</div>
+<div class="grid-3">
+{% for t in tools %}
+<div class="card">
+    <div class="card-icon">{{ t.logo or '🛠️' }}</div>
+    <h3>{{ t.name }}</h3>
+    <p>{{ t.description }}</p>
+    {% if t.category %}<div style="margin-top:0.8rem;"><span class="tag">{{ t.category }}</span></div>{% endif %}
+</div>
+{% endfor %}
+</div>
+{% endblock %}

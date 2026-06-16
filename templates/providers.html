@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Providers{% endblock %}
+{% block content %}
+<div class="page-header" style="position:relative;padding:3rem 0 2rem;text-align:center;">
+    <h1 style="font-size:2.2rem;font-weight:800;letter-spacing:-0.03em;margin-bottom:0.5rem;">🤖 AI Providers</h1>
+    <p style="color:var(--text2);max-width:500px;margin:0 auto;">{{ providers|length }} provider dengan harga, context window, dan info free tier.</p>
+    <div style="margin-top:1rem;"><span class="last-updated">📅 Terakhir diperbarui: 2026-06-17</span></div>
+</div>
+<div class="table-wrap">
+<table>
+    <thead><tr><th>Provider</th><th>Harga (Input/Output)</th><th>Context</th><th>Free Tier</th><th>Website</th></tr></thead>
+    <tbody>
+    {% for p in providers %}
+    <tr>
+        <td><a href="/providers/{{ p.slug }}">{{ p.logo or '🤖' }} {{ p.name }}</a></td>
+        <td>{{ p.input_price or '—' }} / {{ p.output_price or '—' }}</td>
+        <td>{{ p.context_window or '—' }}</td>
+        <td>{% if p.free_tier %}<span class="tag-green">{{ p.free_tier }}</span>{% else %}<span class="tag">Paid</span>{% endif %}</td>
+        <td>{% if p.website_url %}<a href="{{ p.website_url }}" target="_blank" style="font-size:0.85rem;">{{ p.website_url[:30] }}...</a>{% else %}—{% endif %}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</div>
+{% endblock %}

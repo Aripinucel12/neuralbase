@@ -1,0 +1,77 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}{{ 'Edit' if provider else 'Add' }} Provider{% endblock %}
+
+{% block admin_content %}
+<div class="admin-header">
+    <h1>{{ 'Edit' if provider else 'Add' }} Provider</h1>
+    <a href="{{ url_for('admin_providers') }}" class="btn btn-secondary btn-sm">← Back</a>
+</div>
+
+<div class="form-card">
+    <form method="POST">
+        <div class="form-group">
+            <label>Name *</label>
+            <input type="text" name="name" value="{{ provider.name if provider else '' }}" required placeholder="e.g. OpenAI">
+        </div>
+        <div class="form-group">
+            <label>Slug *</label>
+            <input type="text" name="slug" value="{{ provider.slug if provider else '' }}" required placeholder="e.g. openai">
+        </div>
+        <div class="form-group">
+            <label>Logo URL</label>
+            <input type="text" name="logo_url" value="{{ provider.logo_url if provider else '' }}" placeholder="https://...">
+        </div>
+        <div class="form-group">
+            <label>Website URL</label>
+            <input type="text" name="website_url" value="{{ provider.website_url if provider else '' }}" placeholder="https://openai.com">
+        </div>
+        <div class="form-group">
+            <label>Description</label>
+            <textarea name="description" placeholder="Deskripsi provider...">{{ provider.description if provider else '' }}</textarea>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+            <div class="form-group">
+                <label>Pricing Input (per 1M tokens)</label>
+                <input type="text" name="pricing_in" value="{{ provider.pricing_in if provider else '' }}" placeholder="$2.50">
+            </div>
+            <div class="form-group">
+                <label>Pricing Output (per 1M tokens)</label>
+                <input type="text" name="pricing_out" value="{{ provider.pricing_out if provider else '' }}" placeholder="$10.00">
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Context Window</label>
+            <input type="text" name="context_window" value="{{ provider.context_window if provider else '' }}" placeholder="128K">
+        </div>
+        <div class="form-group">
+            <label>Free Tier</label>
+            <input type="text" name="free_tier" value="{{ provider.free_tier if provider else '' }}" placeholder="e.g. $5 free credit">
+        </div>
+        <div class="form-group">
+            <label>Strengths</label>
+            <textarea name="strengths" placeholder="Kelebihan provider...">{{ provider.strengths if provider else '' }}</textarea>
+        </div>
+        <div class="form-group">
+            <label>Weaknesses</label>
+            <textarea name="weaknesses" placeholder="Kekurangan provider...">{{ provider.weaknesses if provider else '' }}</textarea>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+            <div class="form-group">
+                <label>Sort Order</label>
+                <input type="number" name="sort_order" value="{{ provider.sort_order if provider else 0 }}">
+            </div>
+            <div class="form-group">
+                <label>&nbsp;</label>
+                <div class="form-checkbox">
+                    <input type="checkbox" name="is_active" {{ 'checked' if not provider or provider.is_active else '' }}>
+                    <span style="font-size:0.875rem;">Active</span>
+                </div>
+            </div>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">💾 Save</button>
+            <a href="{{ url_for('admin_providers') }}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

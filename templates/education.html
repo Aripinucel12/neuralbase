@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Edukasi{% endblock %}
+{% block content %}
+<div class="page-header" style="position:relative;padding:3rem 0 2rem;text-align:center;">
+    <h1 style="font-size:2.2rem;font-weight:800;letter-spacing:-0.03em;margin-bottom:0.5rem;">📚 Edukasi AI</h1>
+    <p style="color:var(--text2);max-width:500px;margin:0 auto;">Dari dasar sampai advanced — semua tentang AI dan LLM.</p>
+    <div style="margin-top:1rem;"><span class="last-updated">📅 Terakhir diperbarui: 2026-06-17</span></div>
+</div>
+{% for a in articles %}
+<div class="article-card">
+    <div class="article-num">{{ loop.index }}</div>
+    <div class="article-body">
+        <h3><a href="/education/{{ a.slug }}">{{ a.title }}</a></h3>
+        <p>{{ a.content[:150]|e }}{% if a.content|length > 150 %}...{% endif %}</p>
+        <div class="article-meta">
+            <span>📁 {{ a.category }}</span>
+            <span>⏱️ {{ a.read_time if a.read_time else '5 menit' }}</span>
+            {% if a.last_updated %}<span>📅 {{ a.last_updated }}</span>{% endif %}
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}

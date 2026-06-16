@@ -1,0 +1,50 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}Tools{% endblock %}
+
+{% block admin_content %}
+<div class="admin-header">
+    <h1>🔧 Tools</h1>
+    <a href="{{ url_for('admin_tools_add') }}" class="btn btn-primary btn-sm">+ Add Tool</a>
+</div>
+
+{% if tools %}
+<div class="table-wrapper">
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Pricing</th>
+                <th>Rating</th>
+                <th>Active</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for t in tools %}
+            <tr>
+                <td><strong>{{ t.name }}</strong></td>
+                <td><span class="tag tag-purple">{{ t.category }}</span></td>
+                <td>{{ t.pricing or '—' }}</td>
+                <td>{% if t.rating %}⭐ {{ t.rating }}{% else %}—{% endif %}</td>
+                <td>{% if t.is_active %}<span class="text-success">✓</span>{% else %}<span class="text-muted">✕</span>{% endif %}</td>
+                <td>
+                    <div class="actions-cell">
+                        <a href="{{ url_for('admin_tools_edit', item_id=t.id) }}" class="btn btn-secondary btn-sm">Edit</a>
+                        <form method="POST" action="{{ url_for('admin_tools_delete', item_id=t.id) }}" style="display:inline;" onsubmit="return confirm('Yakin hapus?')">
+                            <button type="submit" class="btn btn-danger btn-sm">Del</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="empty-state">
+    <div class="icon">🔧</div>
+    <h3>Belum ada tool</h3>
+</div>
+{% endif %}
+{% endblock %}

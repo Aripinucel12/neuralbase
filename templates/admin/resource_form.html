@@ -1,0 +1,64 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}{{ 'Edit' if resource else 'Add' }} Resource{% endblock %}
+
+{% block admin_content %}
+<div class="admin-header">
+    <h1>{{ 'Edit' if resource else 'Add' }} Resource</h1>
+    <a href="{{ url_for('admin_resources') }}" class="btn btn-secondary btn-sm">← Back</a>
+</div>
+
+<div class="form-card">
+    <form method="POST">
+        <div class="form-group">
+            <label>Name *</label>
+            <input type="text" name="name" value="{{ resource.name if resource else '' }}" required placeholder="e.g. Google Colab">
+        </div>
+        <div class="form-group">
+            <label>Slug *</label>
+            <input type="text" name="slug" value="{{ resource.slug if resource else '' }}" required placeholder="e.g. google-colab">
+        </div>
+        <div class="form-group">
+            <label>Category *</label>
+            <select name="category">
+                <option value="api" {{ 'selected' if resource and resource.category == 'api' else '' }}>API Credits</option>
+                <option value="vps" {{ 'selected' if resource and resource.category == 'vps' else '' }}>Free VPS</option>
+                <option value="gpu" {{ 'selected' if resource and resource.category == 'gpu' else '' }}>Free GPU</option>
+                <option value="tools" {{ 'selected' if resource and resource.category == 'tools' else '' }}>Free Tools</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>URL</label>
+            <input type="text" name="url" value="{{ resource.url if resource else '' }}" placeholder="https://...">
+        </div>
+        <div class="form-group">
+            <label>Logo URL</label>
+            <input type="text" name="logo_url" value="{{ resource.logo_url if resource else '' }}" placeholder="https://...">
+        </div>
+        <div class="form-group">
+            <label>Description</label>
+            <textarea name="description" placeholder="Deskripsi resource...">{{ resource.description if resource else '' }}</textarea>
+        </div>
+        <div class="form-group">
+            <label>Free Details</label>
+            <input type="text" name="free_details" value="{{ resource.free_details if resource else '' }}" placeholder="e.g. Free tier, $300 credit">
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+            <div class="form-group">
+                <label>Sort Order</label>
+                <input type="number" name="sort_order" value="{{ resource.sort_order if resource else 0 }}">
+            </div>
+            <div class="form-group">
+                <label>&nbsp;</label>
+                <div class="form-checkbox">
+                    <input type="checkbox" name="is_active" {{ 'checked' if not resource or resource.is_active else '' }}>
+                    <span style="font-size:0.875rem;">Active</span>
+                </div>
+            </div>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">💾 Save</button>
+            <a href="{{ url_for('admin_resources') }}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

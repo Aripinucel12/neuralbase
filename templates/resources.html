@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Free Resources{% endblock %}
+{% block content %}
+<div class="page-header" style="position:relative;padding:3rem 0 2rem;text-align:center;">
+    <h1 style="font-size:2.2rem;font-weight:800;letter-spacing:-0.03em;margin-bottom:0.5rem;">🎁 Free Resources</h1>
+    <p style="color:var(--text2);max-width:500px;margin:0 auto;">{{ resources|length }} resource gratis — VPS, API credits, GPU, dan tools.</p>
+</div>
+<div class="grid-3">
+{% for r in resources %}
+<div class="card">
+    <div class="card-icon">{{ r.icon or '🎁' }}</div>
+    <h3>{{ r.name }}</h3>
+    <p>{{ r.description }}</p>
+    <div style="margin-top:0.8rem;">
+        <span class="badge badge-free">{{ r.value or 'FREE' }}</span>
+        {% if r.category %}<span class="tag" style="margin-left:0.3rem;">{{ r.category }}</span>{% endif %}
+    </div>
+</div>
+{% endfor %}
+</div>
+{% endblock %}

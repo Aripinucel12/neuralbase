@@ -1,0 +1,51 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}Providers{% endblock %}
+
+{% block admin_content %}
+<div class="admin-header">
+    <h1>🤖 Providers</h1>
+    <a href="{{ url_for('admin_providers_add') }}" class="btn btn-primary btn-sm">+ Add Provider</a>
+</div>
+
+{% if providers %}
+<div class="table-wrapper">
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Pricing In</th>
+                <th>Pricing Out</th>
+                <th>Context</th>
+                <th>Active</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in providers %}
+            <tr>
+                <td><strong>{{ p.name }}</strong></td>
+                <td style="font-family:'JetBrains Mono',monospace;font-size:0.8125rem;">{{ p.pricing_in or '—' }}</td>
+                <td style="font-family:'JetBrains Mono',monospace;font-size:0.8125rem;">{{ p.pricing_out or '—' }}</td>
+                <td>{{ p.context_window or '—' }}</td>
+                <td>{% if p.is_active %}<span class="text-success">✓</span>{% else %}<span class="text-muted">✕</span>{% endif %}</td>
+                <td>
+                    <div class="actions-cell">
+                        <a href="{{ url_for('admin_providers_edit', item_id=p.id) }}" class="btn btn-secondary btn-sm">Edit</a>
+                        <form method="POST" action="{{ url_for('admin_providers_delete', item_id=p.id) }}" style="display:inline;" onsubmit="return confirm('Yakin hapus {{ p.name }}?')">
+                            <button type="submit" class="btn btn-danger btn-sm">Del</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="empty-state">
+    <div class="icon">🤖</div>
+    <h3>Belum ada provider</h3>
+    <p>Klik "Add Provider" untuk menambahkan.</p>
+</div>
+{% endif %}
+{% endblock %}

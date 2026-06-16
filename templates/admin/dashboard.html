@@ -1,0 +1,48 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}Dashboard{% endblock %}
+
+{% block admin_content %}
+<div class="admin-header">
+    <h1>📊 Dashboard</h1>
+    <span class="text-muted">Welcome, {{ current_user.username }}</span>
+</div>
+
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;margin-bottom:2rem;">
+    <a href="{{ url_for('admin_providers') }}" class="card" style="text-align:center;">
+        <div style="font-size:2rem;margin-bottom:0.5rem;">🤖</div>
+        <div style="font-size:2rem;font-weight:800;color:var(--accent);font-family:'JetBrains Mono',monospace;">{{ providers_count }}</div>
+        <div class="text-muted" style="font-size:0.75rem;">PROVIDERS</div>
+    </a>
+    <a href="{{ url_for('admin_resources') }}" class="card" style="text-align:center;">
+        <div style="font-size:2rem;margin-bottom:0.5rem;">🆓</div>
+        <div style="font-size:2rem;font-weight:800;color:var(--success);font-family:'JetBrains Mono',monospace;">{{ resources_count }}</div>
+        <div class="text-muted" style="font-size:0.75rem;">RESOURCES</div>
+    </a>
+    <a href="{{ url_for('admin_tools') }}" class="card" style="text-align:center;">
+        <div style="font-size:2rem;margin-bottom:0.5rem;">🔧</div>
+        <div style="font-size:2rem;font-weight:800;color:var(--purple);font-family:'JetBrains Mono',monospace;">{{ tools_count }}</div>
+        <div class="text-muted" style="font-size:0.75rem;">TOOLS</div>
+    </a>
+    <a href="{{ url_for('admin_education') }}" class="card" style="text-align:center;">
+        <div style="font-size:2rem;margin-bottom:0.5rem;">📚</div>
+        <div style="font-size:2rem;font-weight:800;color:var(--warning);font-family:'JetBrains Mono',monospace;">{{ education_count }}</div>
+        <div class="text-muted" style="font-size:0.75rem;">ARTICLES</div>
+    </a>
+    <a href="{{ url_for('admin_faq') }}" class="card" style="text-align:center;">
+        <div style="font-size:2rem;margin-bottom:0.5rem;">❓</div>
+        <div style="font-size:2rem;font-weight:800;color:var(--text-primary);font-family:'JetBrains Mono',monospace;">{{ faq_count }}</div>
+        <div class="text-muted" style="font-size:0.75rem;">FAQ</div>
+    </a>
+</div>
+
+<div class="card" style="max-width:500px;">
+    <h3 style="font-size:0.875rem;font-weight:600;margin-bottom:1rem;">⚡ Quick Actions</h3>
+    <div style="display:flex;flex-direction:column;gap:0.5rem;">
+        <a href="{{ url_for('admin_providers_add') }}" class="btn btn-secondary btn-sm">+ Add Provider</a>
+        <a href="{{ url_for('admin_resources_add') }}" class="btn btn-secondary btn-sm">+ Add Resource</a>
+        <a href="{{ url_for('admin_tools_add') }}" class="btn btn-secondary btn-sm">+ Add Tool</a>
+        <a href="{{ url_for('admin_education_add') }}" class="btn btn-secondary btn-sm">+ Add Article</a>
+        <a href="{{ url_for('admin_faq_add') }}" class="btn btn-secondary btn-sm">+ Add FAQ</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}{{ 'Edit' if article else 'Add' }} Article{% endblock %}
+
+{% block admin_content %}
+<div class="admin-header">
+    <h1>{{ 'Edit' if article else 'Add' }} Article</h1>
+    <a href="{{ url_for('admin_education') }}" class="btn btn-secondary btn-sm">← Back</a>
+</div>
+
+<div class="form-card">
+    <form method="POST">
+        <div class="form-group">
+            <label>Title *</label>
+            <input type="text" name="title" value="{{ article.title if article else '' }}" required placeholder="e.g. Apa itu LLM?">
+        </div>
+        <div class="form-group">
+            <label>Slug *</label>
+            <input type="text" name="slug" value="{{ article.slug if article else '' }}" required placeholder="e.g. apa-itu-llm">
+        </div>
+        <div class="form-group">
+            <label>Category</label>
+            <select name="category">
+                <option value="general" {{ 'selected' if article and article.category == 'general' else '' }}>General</option>
+                <option value="llm" {{ 'selected' if article and article.category == 'llm' else '' }}>LLM</option>
+                <option value="prompt-engineering" {{ 'selected' if article and article.category == 'prompt-engineering' else '' }}>Prompt Engineering</option>
+                <option value="api" {{ 'selected' if article and article.category == 'api' else '' }}>API</option>
+                <option value="tools" {{ 'selected' if article and article.category == 'tools' else '' }}>Tools</option>
+                <option value="tutorial" {{ 'selected' if article and article.category == 'tutorial' else '' }}>Tutorial</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Thumbnail URL</label>
+            <input type="text" name="thumbnail_url" value="{{ article.thumbnail_url if article else '' }}" placeholder="https://...">
+        </div>
+        <div class="form-group">
+            <label>Content</label>
+            <textarea name="content" style="min-height:300px;" placeholder="Tulis artikel di sini...">{{ article.content if article else '' }}</textarea>
+        </div>
+        <div class="form-group">
+            <div class="form-checkbox">
+                <input type="checkbox" name="is_published" {{ 'checked' if not article or article.is_published else '' }}>
+                <span style="font-size:0.875rem;">Published</span>
+            </div>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">💾 Save</button>
+            <a href="{{ url_for('admin_education') }}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

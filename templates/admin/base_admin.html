@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Admin{% endblock %} — NeuralBase Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- SIDEBAR -->
+        <aside class="admin-sidebar">
+            <div class="sidebar-brand">
+                <div class="logo-text"><span class="text-accent">N</span>euralBase</div>
+                <div class="admin-label">Admin Panel</div>
+            </div>
+            <ul class="sidebar-nav">
+                <li><a href="{{ url_for('admin_dashboard') }}" class="{% if request.endpoint == 'admin_dashboard' %}active{% endif %}">📊 Dashboard</a></li>
+                <li><a href="{{ url_for('admin_providers') }}" class="{% if 'provider' in request.endpoint %}active{% endif %}">🤖 Providers</a></li>
+                <li><a href="{{ url_for('admin_resources') }}" class="{% if 'resource' in request.endpoint %}active{% endif %}">🆓 Resources</a></li>
+                <li><a href="{{ url_for('admin_tools') }}" class="{% if request.endpoint == 'admin_tools' or request.endpoint == 'admin_tools_add' or request.endpoint == 'admin_tools_edit' %}active{% endif %}">🔧 Tools</a></li>
+                <li><a href="{{ url_for('admin_education') }}" class="{% if 'education' in request.endpoint %}active{% endif %}">📚 Edukasi</a></li>
+                <li><a href="{{ url_for('admin_faq') }}" class="{% if 'faq' in request.endpoint %}active{% endif %}">❓ FAQ</a></li>
+                <li style="margin-top:2rem;border-top:1px solid var(--border-color);padding-top:1rem;">
+                    <a href="{{ url_for('index') }}">🌐 View Site</a>
+                </li>
+                <li><a href="{{ url_for('admin_logout') }}">🚪 Logout</a></li>
+            </ul>
+        </aside>
+
+        <!-- CONTENT -->
+        <main class="admin-content">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">
+                {% if category == 'success' %}✅{% else %}❌{% endif %} {{ message }}
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+
+            {% block admin_content %}{% endblock %}
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

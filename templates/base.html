@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}NeuralBase{% endblock %} — AI Resource Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <nav><div class="nav-inner">
+        <a href="/" class="logo"><div class="logo-icon">N</div>NeuralBase</a>
+        <div class="nav-links">
+            <a href="/providers" class="{% if active == 'providers' %}active{% endif %}">Providers</a>
+            <a href="/resources" class="{% if active == 'resources' %}active{% endif %}">Free Resources</a>
+            <a href="/tools" class="{% if active == 'tools' %}active{% endif %}">Tools</a>
+            <a href="/education" class="{% if active == 'education' %}active{% endif %}">Edukasi</a>
+            <a href="/faq" class="{% if active == 'faq' %}active{% endif %}">FAQ</a>
+        </div>
+        <div class="search-btn" onclick="location.href='/search'">&#128269; Search <kbd>Ctrl+K</kbd></div>
+        <button class="mobile-menu-btn" onclick="document.querySelector('.mobile-nav').classList.toggle('active')">&#9776;</button>
+    </div></nav>
+    <div class="mobile-nav">
+        <a href="/providers">Providers</a>
+        <a href="/resources">Free Resources</a>
+        <a href="/tools">Tools</a>
+        <a href="/education">Edukasi</a>
+        <a href="/faq">FAQ</a>
+        <a href="/search">Search</a>
+    </div>
+    <main>{% block content %}{% endblock %}</main>
+    <footer>
+        <div style="max-width:1100px;margin:0 auto;">
+            NeuralBase &mdash; AI Resource Hub &mdash; Built for the community
+        </div>
+    </footer>
+    <script>
+        document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key==='k'){e.preventDefault();location.href='/search'}});
+        document.querySelectorAll('.faq-q').forEach(q=>{q.addEventListener('click',()=>q.parentElement.classList.toggle('open'))});
+    </script>
+</body>
+</html>

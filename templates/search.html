@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Search{% endblock %}
+{% block content %}
+<div class="page-header" style="position:relative;padding:3rem 0 2rem;text-align:center;">
+    <h1 style="font-size:2.2rem;font-weight:800;letter-spacing:-0.03em;margin-bottom:0.5rem;">🔍 Search</h1>
+</div>
+<form method="GET" action="/search">
+    <input type="text" name="q" class="search-input" placeholder="Cari provider, tools, artikel..." value="{{ query or '' }}" autofocus>
+</form>
+{% if results %}
+<div style="margin-top:1.5rem;">
+    <p style="color:var(--text3);margin-bottom:1rem;">{{ results|length }} hasil untuk "{{ query }}"</p>
+    {% for r in results %}
+    <a href="{{ r.url }}" class="card" style="display:block;text-decoration:none;color:inherit;margin-bottom:0.8rem;">
+        <div style="display:flex;align-items:center;gap:0.8rem;">
+            <span class="tag">{{ r.type }}</span>
+            <div>
+                <h3 style="font-size:0.95rem;">{{ r.title }}</h3>
+                <p style="font-size:0.85rem;margin-top:0.2rem;">{{ r.description[:120] }}{% if r.description|length > 120 %}...{% endif %}</p>
+            </div>
+        </div>
+    </a>
+    {% endfor %}
+</div>
+{% elif query %}
+<p style="color:var(--text3);margin-top:1.5rem;text-align:center;">Tidak ada hasil untuk "{{ query }}"</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}{{ article.title }}{% endblock %}
+{% block content %}
+<div class="detail-header">
+    <h1>{{ article.title }}</h1>
+    <div class="detail-meta">
+        <span>📁 {{ article.category }}</span>
+        {% if article.last_updated %}<span>📅 Diperbarui: {{ article.last_updated }}</span>{% endif %}
+    </div>
+</div>
+<div class="article-content">{{ article.content | markdown | safe }}</div>
+<div style="margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--border);">
+    <a href="/education" class="btn btn-outline">← Kembali ke Edukasi</a>
+</div>
+{% endblock %}

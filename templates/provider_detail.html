@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}{{ provider.name }}{% endblock %}
+{% block content %}
+<div class="detail-header">
+    <h1>{{ provider.logo or '🤖' }} {{ provider.name }}</h1>
+    <div class="detail-meta">
+        {% if provider.category %}<span>📁 {{ provider.category }}</span>{% endif %}
+        {% if provider.context_window %}<span>📏 {{ provider.context_window }}</span>{% endif %}
+        {% if provider.free_tier %}<span class="badge badge-free">✅ {{ provider.free_tier }}</span>{% endif %}
+        {% if provider.last_updated %}<span>📅 Diperbarui: {{ provider.last_updated }}</span>{% endif %}
+    </div>
+</div>
+<div class="detail-section">
+    <h2>Tentang</h2>
+    <p style="color:var(--text2);line-height:1.8;">{{ provider.description }}</p>
+</div>
+{% if provider.strengths %}
+<div class="detail-section">
+    <h2>Keunggulan</h2>
+    <p style="color:var(--text2);line-height:1.8;">{{ provider.strengths }}</p>
+</div>
+{% endif %}
+{% if provider.models %}
+<div class="detail-section">
+    <h2>Models</h2>
+    <div style="display:flex;flex-wrap:wrap;gap:0.5rem;">{% for m in provider.models.split(',') %}<span class="tag">{{ m.strip() }}</span>{% endfor %}</div>
+</div>
+{% endif %}
+<div class="detail-section">
+    <h2>Harga</h2>
+    <div class="grid-3">
+        <div class="card"><h3>Input</h3><p style="font-size:1.5rem;font-weight:800;margin-top:0.5rem;">{{ provider.input_price or '—' }}</p></div>
+        <div class="card"><h3>Output</h3><p style="font-size:1.5rem;font-weight:800;margin-top:0.5rem;">{{ provider.output_price or '—' }}</p></div>
+        <div class="card"><h3>Context Window</h3><p style="font-size:1.5rem;font-weight:800;margin-top:0.5rem;">{{ provider.context_window or '—' }}</p></div>
+    </div>
+</div>
+{% if provider.api_url %}
+<div class="detail-section">
+    <h2>API</h2>
+    <div class="card"><p><strong>Endpoint:</strong> <code>{{ provider.api_url }}</code></p>{% if provider.docs_url %}<p style="margin-top:0.5rem;"><a href="{{ provider.docs_url }}" target="_blank">📖 Documentation →</a></p>{% endif %}</div>
+</div>
+{% endif %}
+{% if provider.website_url %}
+<div style="margin-top:2rem;"><a href="{{ provider.website_url }}" target="_blank" class="btn btn-primary">Kunjungi {{ provider.name }} →</a></div>
+{% endif %}
+{% endblock %}

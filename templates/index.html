@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}NeuralBase{% endblock %}
+{% block content %}
+<div class="hero">
+    <h1>NeuralBase<span>.</span></h1>
+    <p>Semua resource AI yang kamu butuhkan — provider, tools, free credits, dan edukasi — dalam satu tempat.</p>
+    <div style="display:flex;gap:0.8rem;justify-content:center;">
+        <a href="/providers" class="btn btn-primary">Lihat Providers →</a>
+        <a href="/education" class="btn btn-outline">Mulai Belajar</a>
+    </div>
+    <div class="hero-stats">
+        <div class="hero-stat"><span class="num">{{ provider_count }}</span><span class="label">Providers</span></div>
+        <div class="hero-stat"><span class="num">{{ tool_count }}</span><span class="label">Tools</span></div>
+        <div class="hero-stat"><span class="num">{{ resource_count }}</span><span class="label">Free Resources</span></div>
+        <div class="hero-stat"><span class="num">{{ edu_count }}</span><span class="label">Artikel</span></div>
+    </div>
+</div>
+<div class="section-h"><h2>Featured Providers</h2></div>
+<div class="grid-4">
+{% for p in providers[:4] %}
+<a href="/providers/{{ p.slug }}" class="card" style="text-decoration:none;color:inherit;">
+    <div class="card-icon">{{ p.logo or '🤖' }}</div>
+    <h3>{{ p.name }}</h3>
+    <p>{{ p.description[:80] }}{% if p.description|length > 80 %}...{% endif %}</p>
+    <div style="margin-top:0.8rem;">{% if p.free_tier %}<span class="tag-green">Free Tier</span>{% endif %} {% if p.context_window %}<span class="tag">{{ p.context_window }}</span>{% endif %}</div>
+</a>
+{% endfor %}
+</div>
+<div class="deco-line"></div>
+<div class="section-h"><h2>Free Resources</h2></div>
+<div class="grid-3">
+{% for r in resources[:3] %}
+<div class="card">
+    <div class="card-icon">{{ r.icon or '🎁' }}</div>
+    <h3>{{ r.name }}</h3>
+    <p>{{ r.description[:100] }}{% if r.description|length > 100 %}...{% endif %}</p>
+    <div style="margin-top:0.8rem;"><span class="badge badge-free">{{ r.value or 'FREE' }}</span></div>
+</div>
+{% endfor %}
+</div>
+<div class="section-h"><h2>Artikel Terbaru</h2></div>
+{% for a in articles[:3] %}
+<div class="article-card">
+    <div class="article-num">{{ loop.index }}</div>
+    <div class="article-body">
+        <h3><a href="/education/{{ a.slug }}">{{ a.title }}</a></h3>
+        <p>{{ a.content[:120]|e }}{% if a.content|length > 120 %}...{% endif %}</p>
+        <div class="article-meta"><span>{{ a.category }}</span><span>{{ a.read_time if a.read_time else '5 menit' }}</span>{% if a.last_updated %}<span>Updated: {{ a.last_updated }}</span>{% endif %}</div>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}
